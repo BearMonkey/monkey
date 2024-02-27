@@ -1,0 +1,24 @@
+server:
+  port: 10072
+
+spring:
+  application:
+    name: dist-store
+  datasource:
+    url: jdbc:mysql://192.168.71.128:3306/dist-store?useSSL=false&rewriteBatchedStatements=true
+    username: root
+    password: Admin888
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+# eureka config
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10000/eureka
+
+# mybatis config
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名
+  #mapper-locations: org/monkey/user/mapper/BookMapper.xml
