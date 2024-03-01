@@ -1,6 +1,6 @@
 package org.monkey.user.controller;
 
-import org.monkey.oauth.common.dto.Result;
+import org.monkey.common.dto.Result;
 import org.monkey.user.pojo.User;
 import org.monkey.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

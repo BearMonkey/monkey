@@ -1,13 +1,10 @@
-package org.monkey.oauth.common.utils;
+package org.monkey.common.utils;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

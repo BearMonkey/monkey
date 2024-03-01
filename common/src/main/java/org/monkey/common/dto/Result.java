@@ -1,7 +1,7 @@
-package org.monkey.oauth.common.dto;
+package org.monkey.common.dto;
 
 import lombok.Data;
-import org.monkey.oauth.common.utils.JsonUtil;
+import org.monkey.common.utils.JsonUtil;
 
 @Data
 public class Result {

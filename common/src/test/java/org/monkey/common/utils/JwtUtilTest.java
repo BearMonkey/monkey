@@ -1,12 +1,9 @@
-package org.monkey.oauth.common.utils;
+package org.monkey.common.utils;
 
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest
 public class JwtUtilTest {

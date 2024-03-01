@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.monkey.dist.store.exception.StoreException;
 import org.monkey.dist.store.pojo.Product;
 import org.monkey.dist.store.service.ProductService;
-import org.monkey.oauth.common.dto.Result;
+import org.monkey.common.dto.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

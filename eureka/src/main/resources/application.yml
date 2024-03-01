@@ -11,4 +11,4 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false       # 这两个配置项设置不项eureka注册，因为时单节点，集群场景才需要注册
     service-url:
-      defaultZone: http://localhost:10000/eureka
+      defaultZone: http://192.168.1.100:10000/eureka

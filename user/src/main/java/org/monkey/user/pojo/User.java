@@ -1,7 +1,7 @@
 package org.monkey.user.pojo;
 
 import lombok.Data;
-import org.monkey.oauth.common.utils.JsonUtil;
+import org.monkey.common.utils.JsonUtil;
 
 import java.sql.Timestamp;
 

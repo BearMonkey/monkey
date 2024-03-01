@@ -1,7 +1,7 @@
 package org.monkey.dist.order.pojo;
 
 import lombok.Data;
-import org.monkey.oauth.common.utils.JsonUtil;
+import org.monkey.common.utils.JsonUtil;
 
 import java.math.BigDecimal;
 import java.util.Date;

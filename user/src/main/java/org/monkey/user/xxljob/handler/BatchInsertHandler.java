@@ -4,15 +4,12 @@ import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import lombok.extern.slf4j.Slf4j;
-import org.monkey.oauth.common.utils.JsonUtil;
+import org.monkey.common.utils.JsonUtil;
 import org.monkey.user.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.Map;
-
-import static org.monkey.oauth.common.utils.JsonUtil.*;
 
 @Slf4j
 @Component
