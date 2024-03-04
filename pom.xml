@@ -30,6 +30,8 @@
         <module>external-systems</module>
         <module>distribute-transaction</module>
         <module>product</module>
+        <module>rabbitmq-direct-producer</module>
+        <module>rabbitmq-direct-consumer</module>
     </modules>
 
     <properties>
