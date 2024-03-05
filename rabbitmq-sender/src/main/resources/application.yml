@@ -1,0 +1,57 @@
+server:
+  port: 10220
+
+spring:
+  application:
+    name: rabbitmq-sender
+  datasource:
+    url: jdbc:mysql://192.168.1.100:3306/monkey?useSSL=false&rewriteBatchedStatements=true
+    username: root
+    password: Admin888
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#  redis:
+#    host: 192.168.1.100
+#    port: 6379
+#    password: Admin888
+
+#    redisson:
+#      config: classpath:redisson-config.yml
+  rabbitmq:
+    host: 192.168.1.100
+    port: 5672
+    username: monkey
+    password: 123456
+    virtual-host: test_vhost
+    publisher-returns: true             # 开启回退模式 消息从 exchange 到 queue 投递失败有一个 returnCallback 退回模式。
+    publisher-confirm-type: correlated  # 开启发布确认 消息从 producer 到 rabbitmq broker有一个 confirmCallback 确认模式。
+#    stream:
+#      username: admin
+#      password: Admin888
+    listener:
+      simple:
+        prefetch: 5
+        #acknowledge-mode: manual
+#      direct:
+#        acknowledge-mode: auto
+#        retry:
+#          # 开启重试
+#          enabled: true
+#          # 最大重试次数
+#          max-attempts: 3
+#          # 重试间隔
+#          max-interval: 1000ms
+
+# eureka config
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.100:10000/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+
+# mybatis config
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名
+  #mapper-locations: org/monkey/user/mapper/BookMapper.xml
