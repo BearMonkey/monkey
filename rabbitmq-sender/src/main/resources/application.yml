@@ -24,6 +24,7 @@ spring:
     virtual-host: test_vhost
     publisher-returns: true             # 开启回退模式 消息从 exchange 到 queue 投递失败有一个 returnCallback 退回模式。
     publisher-confirm-type: correlated  # 开启发布确认 消息从 producer 到 rabbitmq broker有一个 confirmCallback 确认模式。
+
 #    stream:
 #      username: admin
 #      password: Admin888

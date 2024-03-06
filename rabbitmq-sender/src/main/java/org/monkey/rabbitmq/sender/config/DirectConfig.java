@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DirectConfig {
-    
+
     /**
      * 交换机，bean名称同：directExchange
      *
@@ -17,4 +17,5 @@ public class DirectConfig {
     public DirectExchange directExchange() {
         return new DirectExchange("direct_exchange");
     }
+
 }
