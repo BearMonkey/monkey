@@ -7,6 +7,9 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
 public class DirectConfig {
     
@@ -86,5 +89,67 @@ public class DirectConfig {
     @Bean
     public Binding bindingDirectExchangeQueue3(Queue directQueue3, DirectExchange directExchange) {
         return BindingBuilder.bind(directQueue3).to(directExchange).with("direct.key.4444");
+    }
+
+
+
+
+    /**
+     * ack 测试队列
+     *
+     * @return Queue
+     */
+    @Bean
+    public Queue directQueueAck() {
+        Map<String, Object> args = new HashMap<>(2);
+        //交换机标识符
+        args.put("x-dead-letter-exchange", "dead_direct_exchange");
+        //绑定键标识符
+        args.put("x-dead-letter-routing-key", "DeadRoutingKey");
+        return new Queue("direct.queue.ack", true, false, false, args);
+    }
+
+    /**
+     * ack 队列绑定交换机
+     *
+     * @param directQueueAck directQueueAck
+     * @param directExchange directExchange
+     * @return Binding
+     */
+    @Bean
+    public Binding bindingAckQueueAndDirectExchange(Queue directQueueAck, DirectExchange directExchange) {
+        return BindingBuilder.bind(directQueueAck).to(directExchange).with("direct.key.ack");
+    }
+
+    /**
+     * 死信交换机
+     *
+     * @return DirectExchange
+     */
+    @Bean
+    public DirectExchange deadExchange() {
+        return new DirectExchange("dead_direct_exchange");
+    }
+
+    /**
+     * 死信队列
+     *
+     * @return Queue
+     */
+    @Bean
+    public Queue deadQueue() {
+        return new Queue("dead_direct_queue", true);
+    }
+
+    /**
+     * 死信队列和死信交换机绑定
+     *
+     * @param deadQueue 死信队列
+     * @param deadExchange 死信交换机
+     * @return Binding
+     */
+    @Bean
+    public Binding bindingDeadQueueAndDeadExchange(Queue deadQueue, DirectExchange deadExchange) {
+        return BindingBuilder.bind(deadQueue).to(deadExchange).with("DeadRoutingKey");
     }
 }

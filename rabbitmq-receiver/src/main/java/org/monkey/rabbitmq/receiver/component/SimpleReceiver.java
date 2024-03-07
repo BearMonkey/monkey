@@ -30,7 +30,7 @@ public class SimpleReceiver {
             //手动nack 告诉rabbitmq该消息消费失败  第三个参数：如果被拒绝的消息应该被重新请求，而不是被丢弃或变成死信，则为true
             try {
                 log.info(System.currentTimeMillis() + "");
-                channel.basicNack(deliveryTag,true,true);
+                channel.basicNack(deliveryTag,true,false);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

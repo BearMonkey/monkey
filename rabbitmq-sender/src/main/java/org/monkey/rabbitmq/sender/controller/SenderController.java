@@ -11,11 +11,9 @@ import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @RequestMapping("/rabbitmq/sender")
@@ -177,7 +175,6 @@ public class SenderController {
             MessageProperties messageProperties = new MessageProperties();
             messageProperties.setContentType("application/json");
             messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
-            messageProperties.setDeliveryTag(1111L);
 
             // 通过Converter将对象转为Message
             Message message = rabbitTemplate.getMessageConverter().toMessage("xxxx", messageProperties);
@@ -191,10 +188,38 @@ public class SenderController {
                 log.info("消息发送成功");
             }
         } catch (Exception e) {
-            log.info("下单任务提交失败 {} {}", 1111L, e.getMessage());
+            log.info("消息投递失败 {}", e.getMessage());
             return false;
         }
         return true;
     }
 
+    @PostMapping("/direct/ack")
+    public Result directSendWithAck(@RequestBody String[] keys) {
+        log.info("receive request: /rabbitmq/sender/direct/ack, keys={}", keys);
+        if (keys == null) {
+            return Result.error("未指定key，消息投递失败.");
+        }
+
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.setContentType("application/json");
+        messageProperties.setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+        messageProperties.setDeliveryTag(1111L);
+        messageProperties.setReceivedDeliveryMode(MessageDeliveryMode.PERSISTENT);
+
+        String exchange = "direct_exchange";
+        for (String key : keys) {
+            User user = new User();
+            user.setName(key);
+            user.setAge(20);
+            user.setPhone("key: " + key);
+
+            Message message = rabbitTemplate.getMessageConverter()
+                    .toMessage(Objects.requireNonNull(JsonUtil.objToStr(user)), messageProperties);
+
+            log.info("投递消息：{}", message);
+            rabbitTemplate.convertAndSend(exchange, key, message);
+        }
+        return Result.ok();
+    }
 }

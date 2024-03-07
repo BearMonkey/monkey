@@ -42,4 +42,7 @@ public class Result {
     public static Result ok() {
         return new Result(null);
     }
+    public static Result error(String errorMsg) {
+        return new Result(errorMsg, null);
+    }
 }
