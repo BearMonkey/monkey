@@ -16,7 +16,30 @@
 | rabbitmq 消费者 | 10221 | rabbitmq-receiver |
 | mq-tx:产品     | 10230 | mq-tx-product     |
 | mq-tx:订单     | 10240 | mq-tx-order       |
-| mq-tx:用户     | 10250 | mq-tx-user        |
+| mq-tx:付款     | 10250 | mq-tx-pay         |
 
+
+
+
+
+mq-tx-product：展示商品
+
+mq-tx-product：检查库存
+
+新订单队列
+
+mq-tx-order：生成新订单
+
+付款订单队列
+
+mq-tx-pay：完成付款
+
+待扣库存队列
+
+mq-tx-product：完成库存扣减
+
+完成订单队列
+
+mq-tx-order：完成订单
 
 

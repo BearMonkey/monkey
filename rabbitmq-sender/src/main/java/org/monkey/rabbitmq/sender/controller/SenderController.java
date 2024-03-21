@@ -4,10 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.monkey.common.dto.Result;
 import org.monkey.common.utils.JsonUtil;
 import org.monkey.rabbitmq.sender.pojo.User;
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageDeliveryMode;
-import org.springframework.amqp.core.MessageProperties;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,23 +139,8 @@ public class SenderController {
     public Result directWithConfirm() {
 
         // 定义回调
-        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
-
-            /**
-             * @param correlationData   相关配置信息
-             * @param ack       exchange交换机是否成功收到信息
-             * @param cause     失败原因
-             */
-            @Override
-            public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-                System.out.println("confirm running ...");
-                if (ack){
-                    System.out.println("成功接收");
-                }else {
-                    System.out.println("接收失败:" + cause);
-                }
-            }
-        });
+        rabbitTemplate.setConfirmCallback(new MyConfirmCallback());
+        rabbitTemplate.setReturnsCallback(new MyReturnCallback());
         User user = new User();
         user.setName("10010");
         user.setAge(10);
@@ -167,6 +149,8 @@ public class SenderController {
         amqpTemplate.convertAndSend(exchange, "direct.key.confirm", JsonUtil.objToStr(user));
         return Result.ok();
     }
+
+
 
 
     public boolean submitTask() {
@@ -221,5 +205,42 @@ public class SenderController {
             rabbitTemplate.convertAndSend(exchange, key, message);
         }
         return Result.ok();
+    }
+}
+
+
+
+class MyConfirmCallback implements RabbitTemplate.ConfirmCallback {
+
+    /**
+     * @param correlationData   相关配置信息
+     * @param ack       exchange交换机是否成功收到信息
+     * @param cause     失败原因
+     */
+    @Override
+    public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+        System.out.println("confirm running ...");
+        if (ack){
+            System.out.println("成功接收");
+        }else {
+            System.out.println("接收失败:" + cause);
+        }
+    }
+}
+
+@Slf4j
+class MyReturnCallback implements RabbitTemplate.ReturnsCallback {
+    @Override
+    public void returnedMessage(ReturnedMessage returned) {
+        Message message = returned.getMessage();
+        String exchange = returned.getExchange();
+        String routingKey = returned.getRoutingKey();
+        int replyCode = returned.getReplyCode();
+        String replyText = returned.getReplyText();
+        log.info("message: {}", message);
+        log.info("exchange: {}", exchange);
+        log.info("routingKey: {}", routingKey);
+        log.info("replyCode: {}", replyCode);
+        log.info("replyText: {}", replyText);
     }
 }
