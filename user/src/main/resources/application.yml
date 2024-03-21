@@ -1,0 +1,36 @@
+server:
+  port: 10020
+
+spring:
+  application:
+    name: user
+  datasource:
+    url: jdbc:mysql://192.168.1.100:3306/monkey?useSSL=false&rewriteBatchedStatements=true
+    username: root
+    password: Admin888
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+# eureka config
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.100:10000/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+
+# mybatis config
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名
+  mapper-locations: org/monkey/user/mapper/BookMapper.xml
+
+xxl:
+  job:
+    admin:
+      addresses: http://192.168.1.106:10100/xxl-job-admin/
+      # 执行器的名字
+    executor:
+      appname: user
+    accessToken: default_token

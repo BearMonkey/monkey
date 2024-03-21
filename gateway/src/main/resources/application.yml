@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+#        - id: auth
+#          uri: http://localhost:10010
+#          predicates:
+#            - Path=/auth/**
+
+        - id: user
+          #uri: http://192.168.1.100:10020
+          uri: lb://user
+          predicates:
+            - Path=/user/**
+
+        - id: dist-order
+          uri: http://192.168.1.100:10071
+          predicates:
+            - Path=/dist/order/**
+
+        - id: dist-store
+          uri: http://192.168.1.100:10072
+          predicates:
+            - Path=/dist/store/**
+
+        - id: product
+          uri: lb://product
+          predicates:
+            - Path=/product/**
+
+
+# eureka config
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.1.100:10000/eureka
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
