@@ -4,9 +4,13 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.monkey.common.utils.JsonUtil;
+import org.monkey.rabbitmq.common.config.SimpleConfig;
+import org.monkey.rabbitmq.common.config.WorkerQueueConfig;
 import org.monkey.rabbitmq.receiver.pojo.User;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -14,8 +18,16 @@ import java.io.IOException;
 @Component
 @Slf4j
 public class SimpleReceiver {
-    
-    @RabbitListener(queues = "simple_queue")
+
+    //@RabbitListener(queues = SimpleConfig.SIMPLE_QUEUE)
+    //queuesToDeclare = {@Queue(WorkerQueueConfig.WORK_QUEUE)}
+    @RabbitListener(queuesToDeclare = {@Queue(SimpleConfig.SIMPLE_QUEUE)})
+    public void recieve2(String msg, Message message, AMQP.Channel channel) {
+        log.info("simple receiver 收到消息：{}", JsonUtil.strToObj(msg, User.class));
+    }
+
+    //@RabbitListener(queues = SimpleConfig.SIMPLE_QUEUE_WITH_ACK)
+    @RabbitListener(queuesToDeclare = {@Queue(SimpleConfig.SIMPLE_QUEUE_WITH_ACK)})
     public void recieve1(String msg, Channel channel, Message message) {
         // log.info("1111 收到消息：{}", JsonUtil.strToObj(msg, User.class));
         long deliveryTag = message.getMessageProperties().getDeliveryTag();
@@ -36,9 +48,4 @@ public class SimpleReceiver {
             }
         }
     }
-    
-    /*@RabbitListener(queues = "simple_queue")
-    public void recieve2(String msg, Message message, AMQP.Channel channel) {
-        log.info("2222 收到消息：{}", JsonUtil.strToObj(msg, User.class));
-    }*/
 }

@@ -3,6 +3,7 @@ package org.monkey.rabbitmq.receiver.component;
 import com.rabbitmq.client.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.monkey.common.utils.JsonUtil;
+import org.monkey.rabbitmq.common.config.FanoutConfig;
 import org.monkey.rabbitmq.receiver.pojo.User;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.Exchange;
@@ -16,38 +17,72 @@ import java.io.IOException;
 @Component
 @Slf4j
 public class FanoutReceiver {
-    @RabbitListener(queues = "fanout.queue1")
-    public void recieve1(String msg) {
-        try {
-            log.info("1111 收到消息：{}", JsonUtil.strToObj(msg, User.class));
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    @RabbitListener(queues = "fanout.queue2")
-    public void recieve2(String msg) {
-        try {
-            log.info("2222 收到消息：{}", JsonUtil.strToObj(msg, User.class));
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    
+    //@RabbitListener(queues = FanoutConfig.FANOUT_QUEUE_1)  // 这种方式不会自动创建
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(
-                    value = "fanout.queue2",
+                    value = FanoutConfig.FANOUT_QUEUE_1,
                     durable = "true"
             ),
             exchange = @Exchange(
-                    value = "fanout_exchange",
+                    value = FanoutConfig.FANOUT_EXCHANGE,
                     ignoreDeclarationExceptions = "true",
                     type = "fanout"
             )
     ))
+    public void recieve1(String msg, Channel channel, Message message) {
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        try {
+            log.info("1111 收到消息：{}", JsonUtil.strToObj(msg, User.class));
+            channel.basicAck(deliveryTag,true);
+        } catch (IOException e) {
+            try {
+                log.error("recieve1 comsume, will return nack, deliveryTag={}, msg={}.", deliveryTag, msg);
+                channel.basicNack(deliveryTag,true,false);
+            } catch (IOException ex) {
+                log.error("recieve1 return nack fail, deliveryTag={}, msg={}.", deliveryTag, msg);
+            }
+        }
+    }
+    
+    //@RabbitListener(queues = FanoutConfig.FANOUT_QUEUE_2)
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(
+                    value = FanoutConfig.FANOUT_QUEUE_2,
+                    durable = "true"
+            ),
+            exchange = @Exchange(
+                    value = FanoutConfig.FANOUT_EXCHANGE,
+                    ignoreDeclarationExceptions = "true",
+                    type = "fanout"
+            )
+    ))
+    public void recieve2(String msg, Channel channel, Message message) {
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        try {
+            log.info("2222 收到消息：{}", JsonUtil.strToObj(msg, User.class));
+            channel.basicAck(deliveryTag,true);
+        } catch (IOException e) {
+            try {
+                log.error("recieve2 comsume, will return nack, deliveryTag={}, msg={}.", deliveryTag, msg);
+                channel.basicNack(deliveryTag,true,false);
+            } catch (IOException ex) {
+                log.error("recieve2 return nack fail, deliveryTag={}, msg={}.", deliveryTag, msg);
+            }
+        }
+    }
+    
+    
+    /*@RabbitListener(bindings = @QueueBinding(
+            value = @Queue(
+                    value = FanoutConfig.FANOUT_QUEUE_3,
+                    durable = "true"
+            ),
+            exchange = @Exchange(
+                    value = FanoutConfig.FANOUT_EXCHANGE,
+                    ignoreDeclarationExceptions = "true",
+                    type = "fanout"
+            )
+    ))*/
     public void recieve3(String msg, Channel channel, Message message) {
         long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {

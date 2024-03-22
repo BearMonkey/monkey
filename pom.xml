@@ -27,6 +27,7 @@
         <module>mq-tx-pay</module>
         <module>mq-tx-rabbitmq-service</module>
         <module>mq-tx-common</module>
+        <module>rabbitmq-config</module>
     </modules>
 
     <properties>

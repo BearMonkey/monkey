@@ -1,7 +1,9 @@
-package org.monkey.rabbitmq.receiver.config;
+package org.monkey.rabbitmq.common.config;
 
-import org.springframework.amqp.core.*;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,35 +13,41 @@ import org.springframework.context.annotation.Configuration;
  */
 //@Configuration
 public class TopicConfig {
-    
+
+    public static final String TOPIC_EXCHANGE = "topic_exchange";
+    public static final String TOPIC_QUEUE_1 = "topic.queue1";
+    public static final String TOPIC_QUEUE_2 = "topic.queue2";
+    public static final String TOPIC_EVEN_ROUTING_KEY = "topic.even.*";
+    public static final String TOPIC_ODD_ROUTING_KEY = "topic.odd.*";
+
     /**
      * topic 交换机
      * @return TopicExchange
      */
-    @Bean
+    /*@Bean
     public TopicExchange topicExchange() {
-        return new TopicExchange("topic_exchange");
-    }
+        return new TopicExchange(TOPIC_EXCHANGE);
+    }*/
     
     /**
      * 队列1
      *
      * @return Queue
      */
-    @Bean
+    /*@Bean
     public Queue topicQueue1() {
-        return new Queue("topic.queue1");
-    }
+        return new Queue(TOPIC_QUEUE_1);
+    }*/
     
     /**
      * 队列2
      *
      * @return Queue
      */
-    @Bean
+    /*@Bean
     public Queue topicQueue2() {
-        return new Queue("topic.queue2");
-    }
+        return new Queue(TOPIC_QUEUE_2);
+    }*/
     
     /**
      * 队列1 绑定到交换机
@@ -48,10 +56,10 @@ public class TopicConfig {
      * @param topicExchange 交换机
      * @return Binding对象
      */
-    @Bean
+    /*@Bean
     public Binding bindingTopicExchangeQueue1(Queue topicQueue1, TopicExchange topicExchange) {
-        return BindingBuilder.bind(topicQueue1).to(topicExchange).with("topic.even.*");
-    }
+        return BindingBuilder.bind(topicQueue1).to(topicExchange).with(TOPIC_EVEN_ROUTING_KEY);
+    }*/
     
     /**
      * 队列1 绑定到交换机
@@ -60,8 +68,8 @@ public class TopicConfig {
      * @param topicExchange 交换机
      * @return Binding对象
      */
-    @Bean
+    /*@Bean
     public Binding bindingTopicExchangeQueue2(Queue topicQueue2, TopicExchange topicExchange) {
-        return BindingBuilder.bind(topicQueue2).to(topicExchange).with("topic.odd.*");
-    }
+        return BindingBuilder.bind(topicQueue2).to(topicExchange).with(TOPIC_ODD_ROUTING_KEY);
+    }*/
 }
