@@ -25,7 +25,7 @@ public class DistributedLockConfig {
      * 默认尝试20s
      */
     private final static long LOCK_TRY_TIMEOUT = 20 * 1000L;
-    
+
     private RedisTemplate template;
     
     public void setTemplate(RedisTemplate template) {

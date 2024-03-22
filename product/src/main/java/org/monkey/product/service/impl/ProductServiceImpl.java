@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
     
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
     
     @Autowired
     private RedissonClient redissonClient;

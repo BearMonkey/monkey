@@ -14,8 +14,6 @@ spring:
     port: 6379
     password: Admin888
 
-    redisson:
-      config: classpath:redisson-config.yml
 
 # eureka config
 eureka:
