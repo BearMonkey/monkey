@@ -10,32 +10,26 @@ spring:
         locator:
           enabled: true
       routes:
-#        - id: auth
-#          uri: http://localhost:10010
-#          predicates:
-#            - Path=/auth/**
-
         - id: user
           #uri: http://192.168.1.100:10020
           uri: lb://user
           predicates:
             - Path=/user/**
 
-        - id: dist-order
-          uri: http://192.168.1.100:10071
-          predicates:
-            - Path=/dist/order/**
-
-        - id: dist-store
-          uri: http://192.168.1.100:10072
-          predicates:
-            - Path=/dist/store/**
-
         - id: product
           uri: lb://product
           predicates:
             - Path=/product/**
 
+        - id: rabbitmq-receiver
+          uri: lb://rabbitmq-receiver
+          predicates:
+            - Path=/rabbitmq/receiver/**
+
+        - id: rabbitmq-sender
+          uri: lb://rabbitmq-sender
+          predicates:
+            - Path=/rabbitmq/sender/**
 
 # eureka config
 eureka:
