@@ -21,7 +21,6 @@
         <module>two-pc-boss</module>
         <module>two-pc-customer-a</module>
         <module>two-pc-customer-b</module>
-        <module>external-systems</module>
         <module>distribute-transaction</module>
         <module>product</module>
         <module>rabbitmq-sender</module>
