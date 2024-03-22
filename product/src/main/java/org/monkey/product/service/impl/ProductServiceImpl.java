@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
     
     @Override
     public List<Product> queryAllProduct() {
-        redisTest();
+        //redisTest();
         return productMapper.queryAllProduct();
     }
     
