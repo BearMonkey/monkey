@@ -10,5 +10,7 @@ image_name="${module_name}"
 if [ "X${tag}" == "X"  ]; then
     tag="latest"
 fi
-docker run --privileged=true -d -p ${port1}:${port_at_host} --name ${container_name1} ${image_name}:${tag}
-docker run --privileged=true -d -p ${port2}:${port_at_host} --name ${container_name2} ${image_name}:${tag}
+#docker run --privileged=true -d -p ${port1}:${port_at_host} --name ${container_name1} ${image_name}:${tag}
+#docker run --privileged=true -d -p ${port2}:${port_at_host} --name ${container_name2} ${image_name}:${tag}
+docker run --privileged=true -d -p --name ${container_name1} ${image_name}:${tag}
+docker run --privileged=true -d -p --name ${container_name2} ${image_name}:${tag}
