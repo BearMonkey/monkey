@@ -28,6 +28,7 @@
         <module>mq-tx-rabbitmq-service</module>
         <module>mq-tx-common</module>
         <module>rabbitmq-config</module>
+        <module>mq-tx-account</module>
     </modules>
 
     <properties>

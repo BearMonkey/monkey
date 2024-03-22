@@ -39,13 +39,18 @@ public class Result {
     public static final String SUCCESS_CODE = "00";
     public static final String SUCCUSS_MSG = "success";
 
+    public static final String ERROR_CODE = "-1";
+
     public static Result ok() {
         return new Result(null);
     }
     public static Result ok(Object data) {
         return new Result(data);
     }
+    public static Result error(String code, String errorMsg) {
+        return new Result(code, errorMsg);
+    }
     public static Result error(String errorMsg) {
-        return new Result(errorMsg, null);
+        return new Result(ERROR_CODE, errorMsg);
     }
 }
