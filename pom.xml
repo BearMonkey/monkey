@@ -18,10 +18,6 @@
         <module>common</module>
         <module>eureka</module>
         <module>gateway</module>
-        <!--<module>oauth2-app</module>
-        <module>oauth2-auth</module>
-        <module>oauth2-resource</module>
-        <module>auth</module>-->
         <module>user</module>
         <module>two-pc-boss</module>
         <module>two-pc-customer-a</module>
