@@ -31,6 +31,11 @@ spring:
           predicates:
             - Path=/rabbitmq/sender/**
 
+        - id: mq-tx-account
+          uri: lb://mq-tx-account
+          predicates:
+            - Path=/mqtx/account/**
+
 # eureka config
 eureka:
   client:
