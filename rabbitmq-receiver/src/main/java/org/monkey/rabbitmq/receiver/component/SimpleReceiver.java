@@ -22,13 +22,24 @@ public class SimpleReceiver {
     //@RabbitListener(queues = SimpleConfig.SIMPLE_QUEUE)
     //queuesToDeclare = {@Queue(WorkerQueueConfig.WORK_QUEUE)}
     @RabbitListener(queuesToDeclare = {@Queue(SimpleConfig.SIMPLE_QUEUE)})
-    public void recieve2(String msg, Message message, AMQP.Channel channel) {
-        log.info("simple receiver 收到消息：{}", JsonUtil.strToObj(msg, User.class));
+    public void recieve1(String msg, Channel channel, Message message) {
+        long deliveryTag = message.getMessageProperties().getDeliveryTag();
+        try {
+            log.info("simple receiver 收到消息：{}", JsonUtil.strToObj(msg, User.class));
+            channel.basicAck(deliveryTag,true);
+        } catch (IOException e) {
+            try {
+                log.error("simple receiver comsume fail, return nack, deliveryTag={}, msg={}.", deliveryTag, msg);
+                channel.basicNack(deliveryTag,true,false);
+            } catch (IOException ex) {
+                log.error("simple receiver return nack fail, deliveryTag={}, msg={}.", deliveryTag, msg);
+            }
+        }
     }
 
     //@RabbitListener(queues = SimpleConfig.SIMPLE_QUEUE_WITH_ACK)
     @RabbitListener(queuesToDeclare = {@Queue(SimpleConfig.SIMPLE_QUEUE_WITH_ACK)})
-    public void recieve1(String msg, Channel channel, Message message) {
+    public void recieve2(String msg, Channel channel, Message message) {
         // log.info("1111 收到消息：{}", JsonUtil.strToObj(msg, User.class));
         long deliveryTag = message.getMessageProperties().getDeliveryTag();
         try {
