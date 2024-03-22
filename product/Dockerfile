@@ -1,6 +1,6 @@
-FROM java:8
+FROM openjdk:17
 
-COPY *.jar /app.jar
+COPY ./target/*.jar /app.jar
 
 CMD ["--server.port=10080"]
 
