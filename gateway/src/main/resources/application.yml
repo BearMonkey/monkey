@@ -36,6 +36,11 @@ spring:
           predicates:
             - Path=/mqtx/account/**
 
+        - id: mq-tx-agent
+          uri: lb://mq-tx-agent
+          predicates:
+            - Path=/mqtx/agent/**
+
 # eureka config
 eureka:
   client:

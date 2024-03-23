@@ -29,6 +29,7 @@
         <module>mq-tx-common</module>
         <module>rabbitmq-config</module>
         <module>mq-tx-account</module>
+        <module>mq-tx-agent</module>
     </modules>
 
     <properties>
