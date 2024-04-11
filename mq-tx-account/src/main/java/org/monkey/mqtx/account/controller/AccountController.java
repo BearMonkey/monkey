@@ -2,7 +2,7 @@ package org.monkey.mqtx.account.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.monkey.common.dto.Result;
-import org.monkey.mqtx.account.AccountException;
+import org.monkey.mqtx.account.exception.AccountException;
 import org.monkey.mqtx.account.pojo.Account;
 import org.monkey.mqtx.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,15 +55,11 @@ public class AccountController {
 
     @GetMapping("/accountno/{accountNo}")
     public Result queryById(@PathVariable("accountNo") String accountNo) {
-        List<Account> accounts = accountService.queryByAccountNo(accountNo);
-        if (null == accounts || accounts.isEmpty()) {
+        Account account = accountService.queryByAccountNo(accountNo);
+        if (null == account) {
             return new Result(Result.ERROR_CODE, "账号不存在");
         }
-        if (accounts.size() > 1) {
-            log.error("数据库中账号不唯一，accountNo={}", accountNo);
-            return new Result(Result.ERROR_CODE, "数据异常，请联系管理员");
-        }
-        return Result.ok(accounts.get(0));
+        return Result.ok(account);
     }
 
 }

@@ -1,4 +1,4 @@
-package org.monkey.mqtx.account;
+package org.monkey.mqtx.account.exception;
 
 public class AccountException extends Exception {
     public AccountException() {

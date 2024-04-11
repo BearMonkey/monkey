@@ -1,5 +1,6 @@
 package org.monkey.mqtx.account;
 
+import org.apache.ibatis.mapping.MappedStatement;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,5 +12,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 public class MqtxAccountApp {
     public static void main(String[] args) {
         SpringApplication.run(MqtxAccountApp.class, args);
+        MappedStatement
     }
 }

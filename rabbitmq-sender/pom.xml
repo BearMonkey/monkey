@@ -41,7 +41,7 @@
         </dependency>
         <dependency>
             <groupId>org.monkey</groupId>
-            <artifactId>rabbitmq-config</artifactId>
+            <artifactId>rabbitmq-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

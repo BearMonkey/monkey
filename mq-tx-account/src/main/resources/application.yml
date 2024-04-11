@@ -13,6 +13,22 @@ spring:
     host: 192.168.1.100
     port: 6379
     password: Admin888
+  rabbitmq:
+    host: 192.168.1.100
+    port: 5672
+    username: monkey
+    password: 123456
+    virtual-host: monkey_vhost
+    publisher-returns: true             # 开启回退模式 消息从 exchange 到 queue 投递失败有一个 returnCallback 退回模式。
+    publisher-confirm-type: correlated  # 开启发布确认 消息从 producer 到 rabbitmq broker有一个 confirmCallback 确认模式。
+    listener:
+      simple:
+        prefetch: 5
+        acknowledge-mode: manual # 开启手动ack
+        retry: # 这里的重试应该是队列到消费者发送失败的重试，不是nack信号的次数
+          enabled: true
+          max-attempts: 3
+          max-interval: 1000ms
 
 
 # eureka config

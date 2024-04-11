@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.monkey.mqtx.account.mapper.AccountMsgMapper">
+    <update id="update" parameterType="org.monkey.mqtx.account.pojo.AccountMsg">
+        update t_account_msg
+        <set>
+            <if test="messageStatus != null">message_status=#{messageStatus},</if>
+            <if test="updateUser != null">update_user=#{updateUser},</if>
+            <if test="updateTime != null">update_time=#{updateTime},</if>
+            <if test="status != null">status=#{status},</if>
+        </set>
+        where message_id=#{messageId}
+    </update>
+
+</mapper>

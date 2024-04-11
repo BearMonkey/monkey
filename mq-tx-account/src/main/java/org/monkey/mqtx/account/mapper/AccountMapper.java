@@ -22,7 +22,7 @@ public interface AccountMapper {
     Account selctById(Integer id);
 
     @Select("select * from t_account where account_no=#{accountNo}")
-    List<Account> selctByAccountNo(String accountNo);
+    Account selctByAccountNo(String accountNo);
 
     @Select("select * from t_account")
     List<Account> selctAll();

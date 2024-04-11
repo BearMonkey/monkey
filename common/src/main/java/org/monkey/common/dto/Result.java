@@ -53,4 +53,5 @@ public class Result {
     public static Result error(String errorMsg) {
         return new Result(ERROR_CODE, errorMsg);
     }
+
 }
