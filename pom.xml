@@ -21,7 +21,7 @@
         <module>gateway</module>
         <module>user</module>
         <module>product</module>
-        <module>rabbitmq-sender</module>
+        <!--<module>rabbitmq-sender</module>
         <module>rabbitmq-receiver</module>
         <module>mq-tx-order</module>
         <module>mq-tx-product</module>
@@ -33,7 +33,7 @@
         <module>mq-tx-agent</module>
         <module>kafka-demo</module>
         <module>kafka-demo/kafka-demo-consumer</module>
-        <module>kafka-demo/kafka-demo-producer</module>
+        <module>kafka-demo/kafka-demo-producer</module>-->
     </modules>
 
     <properties>
@@ -143,6 +143,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
             <optional>true</optional>
         </dependency>
 
