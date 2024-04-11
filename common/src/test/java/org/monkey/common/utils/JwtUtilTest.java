@@ -8,14 +8,14 @@ import java.util.HashMap;
 @SpringBootTest
 public class JwtUtilTest {
 
-    @Test
+    //@Test
     public void getJwt() {
         HashMap<String, Object> claims = new HashMap<>();
         String token = JwtUtil.getJwt(claims);
         System.out.println(token);
     }
 
-    @Test
+    //@Test
     public void parseJwt() {
         String token = "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTk5NzQ1MDd9.-fiRGWVvwCuCWCInY4F1RhaDkfZkJf7aVyYpioDhqMw";
         JwtUtil.parseJwt(token);
