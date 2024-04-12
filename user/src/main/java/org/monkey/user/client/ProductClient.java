@@ -5,9 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@FeignClient("productClient")
-@RequestMapping("/product")
+@FeignClient(name = "product", fallback = ProdutClientFallback.class)
 public interface ProductClient {
-    @GetMapping
-    public Result lsit();
+    @GetMapping("/product")
+    Result lsit();
 }
